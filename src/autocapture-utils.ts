@@ -118,6 +118,19 @@ export function isDocumentFragment(el: Element | ParentNode | undefined | null):
 
 export const autocaptureCompatibleElements = ['a', 'button', 'form', 'input', 'select', 'textarea', 'label']
 
+/**
+ * Determines whether the given element is an SVG related element or not.
+ * @param {Element} el - The element to check.
+ * @returns {boolean} Returns true if the element is an SVG related element, false otherwise.
+ */
+export function isSvgElement(el: Element): boolean {
+    return (
+        autocaptureCompatibleElements.indexOf(el.tagName.toLowerCase()) === -1 &&
+        (isTag(el, 'svg') || !!(el as any).ownerSVGElement)
+    )
+}
+
+
 /*
  if there is no config, then all elements are allowed
  if there is a config, and there is an allow list, then only elements in the allow list are allowed

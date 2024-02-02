@@ -16,6 +16,7 @@ import {
     shouldCaptureElement,
     shouldCaptureValue,
     splitClassString,
+    isSvgElement,
 } from './autocapture-utils'
 import RageClick from './extensions/rageclick'
 import { AutocaptureConfig, DecideResponse, Properties } from './types'
@@ -250,6 +251,11 @@ export class Autocapture {
             ) {
                 this._captureEvent(e, '$rageclick')
             }
+        }
+
+        // sometimes buttons have svg icons which end up being the target, here we bubble up to the actual button
+        while (target && isSvgElement(target)) {
+            target = target.parentNode as Element | null
         }
 
         const isCopyAutocapture = eventName === COPY_AUTOCAPTURE_EVENT
