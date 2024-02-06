@@ -291,13 +291,15 @@ export class Autocapture {
                 explicitNoCapture = false
 
             each(targetElementList, (el) => {
+                if (!(el instanceof Element)) return
+
                 const shouldCaptureEl = shouldCaptureElement(el)
 
                 // if the element or a parent element is an anchor tag
                 // include the href as a property
                 if (el.tagName.toLowerCase() === 'a') {
                     href = el.getAttribute('href')
-                    href = shouldCaptureEl && shouldCaptureValue(href) && href
+                    href = shouldCaptureEl && shouldCaptureValue(href!) && href
                 }
 
                 // allow users to programmatically prevent capturing of elements by adding class 'ph-no-capture'

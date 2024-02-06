@@ -240,7 +240,8 @@ export function shouldCaptureDomEvent(
             continue
         }
         parentNode = getParentElement(curEl)
-        if (!parentNode) break
+        if (!(parentNode instanceof Element)) break
+
         if (captureOnAnyElement || autocaptureCompatibleElements.indexOf(parentNode.tagName.toLowerCase()) > -1) {
             parentIsUsefulElement = true
         } else {
