@@ -50,9 +50,32 @@ export class RequestRouter {
         return this._regionCache[this.apiHost]
     }
 
+    // endpointFor(target: RequestRouterTarget, path: string = ''): string {
+    //     if (path) {
+    //         path = path[0] === '/' ? path : `/${path}`
+    //     }
+
+    //     if (target === 'ui') {
+    //         return ((this.uiHost || this.apiHost) + path).replace(/\/$/, '')
+    //     }
+
+    //     if (!this.instance.config.__preview_ingestion_endpoints || this.region === RequestRouterRegion.CUSTOM) {
+    //         return (this.apiHost + path).replace(/\/$/, '')
+    //     }
+
+    //     const suffix = 'i.posthog.com' + path
+
+    //     switch (target) {
+    //         case 'assets':
+    //             return `https://${this.region}-assets.${suffix}`
+    //         case 'api':
+    //             return `https://${this.region}.${suffix}`
+    //     }
+    // }
+
     endpointFor(target: RequestRouterTarget, path: string = ''): string {
         if (path) {
-            path = path[0] === '/' ? path : `/${path}`
+            path = removeTrailingSlash(path[0] === '/' ? path : `/${path}`)
         }
 
         if (target === 'ui') {
@@ -72,4 +95,8 @@ export class RequestRouter {
                 return `https://${this.region}.${suffix}`
         }
     }
+}
+
+function removeTrailingSlash(url: string): string {
+    return url.replace(/\/$/, '').replace(/\/\?/, '?')
 }

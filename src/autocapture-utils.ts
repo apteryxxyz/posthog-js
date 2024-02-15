@@ -130,7 +130,6 @@ export function isSvgElement(el: Element): boolean {
     )
 }
 
-
 /*
  if there is no config, then all elements are allowed
  if there is a config, and there is an allow list, then only elements in the allow list are allowed
